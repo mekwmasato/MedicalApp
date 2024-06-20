@@ -1,0 +1,9 @@
+{% extends 'myapp/base.html' %}
+
+{% block content %}
+    {% if user.is_doctor %}
+        <h1>医師用ページ</h1>
+    {% else %}
+        <h1>患者用ページ</h1>
+    {% endif %}
+{% endblock %}
