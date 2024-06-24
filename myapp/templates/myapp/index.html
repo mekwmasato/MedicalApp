@@ -1,9 +1,36 @@
 {% extends 'myapp/base.html' %}
 
 {% block content %}
-    {% if user.is_doctor %}
+    {% if is_doctor %}
         <h1>医師用ページ</h1>
+        <h2>登録済み患者リスト</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>名前</th>
+                    <th>メール</th>
+                    <th>登録日</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for patient in registered_patients %}
+                <tr>
+                    <td>{{ patient.first_name }} {{ patient.last_name }}</td>
+                    <td>{{ patient.email }}</td>
+                    <td>{{ patient.created }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h2>患者登録</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">登録</button>
+        </form>
     {% else %}
         <h1>患者用ページ</h1>
+        <p>患者専用の情報をここに表示します。</p>
     {% endif %}
 {% endblock %}
